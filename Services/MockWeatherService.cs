@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using WeatherApi.Services;
 
 namespace WeatherApi.Services;
 
@@ -11,7 +10,12 @@ public class MockWeatherService : IWeatherService
 
     public async Task<IEnumerable<WeatherForecast>> GetForecastAsync(int days = 5)
     {
-        //await Task.Delay(100); // Yields thread and in real it will be a DB call
+        await Task.Delay(100); // Yields thread and in real it will be a DB call
+
+        if (Random.Shared.Next(100) < 10)  // 10% fail rate
+        {
+            throw new InvalidOperationException("Mock DB connection failed – transient error");  // Throw for handling
+        }
 
         var stopwatch = Stopwatch.StartNew();
         var forecasts = Enumerable.Range(1, days).Select(index => new WeatherForecast(
