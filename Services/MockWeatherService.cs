@@ -11,7 +11,7 @@ public class MockWeatherService : IWeatherService
 
     public async Task<IEnumerable<WeatherForecast>> GetForecastAsync(int days = 5)
     {
-        await Task.Delay(100); // Yields thread and in real it will be a DB call
+        //await Task.Delay(100); // Yields thread and in real it will be a DB call
 
         var stopwatch = Stopwatch.StartNew();
         var forecasts = Enumerable.Range(1, days).Select(index => new WeatherForecast(
